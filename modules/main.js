@@ -2,17 +2,11 @@ import {loadLine} from './line.js'
 import {loadMap} from './map.js'
 function loadData(){
     dropdown();
-    console.log('Poggers');
     // loadMap();
     loadLine();
 }
-console.log('Tester');
-document.getElementById('body').onload = function() {loadData()};
-// loadData();
-
-
  function dropdown() {
-    // document.getElementById('selection')
+    document.getElementById("selection").style.height = "50px";
     var values = [
         ['United States', 'USA'],
         ['Arizona', 'AZ'],
@@ -80,3 +74,5 @@ document.getElementById('body').onload = function() {loadData()};
     } 
     document.getElementById('selection').appendChild(select);
 }
+
+document.getElementById('body').onload = function() {loadData()};

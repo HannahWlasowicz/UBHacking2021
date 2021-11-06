@@ -7,7 +7,7 @@ export function loadLine(){
     xhttp.onreadystatechange = function(){
         if (this.readyState === 4 && this.status === 200){
             var lineParams = getLineParams(this.response);
-            Plotly.newPlot('lineChart', lineParams.data);
+            Plotly.newPlot('lineChart', lineParams.data, lineParams.layout);
         }
     };
     xhttp.open("GET", "/covid/total");
@@ -49,12 +49,47 @@ function setupLineData(arr){
 }
 
 
+function setupLineLayout(){
+    var layout = {
+        title: {
+          text:'COVID-19 Vaccination and Cases',
+          font: {
+            family: 'Courier New, monospace',
+            size: 24
+          },
+          xref: 'paper',
+          x: 0.05,
+        },
+        xaxis: {
+          title: {
+            text: 'Date',
+            font: {
+              family: 'Courier New, monospace',
+              size: 18,
+              color: '#7f7f7f'
+            }
+          },
+        },
+        yaxis: {
+          title: {
+            text: 'Vaccination and COVID Cases',
+            font: {
+              family: 'Courier New, monospace',
+              size: 18,
+              color: '#7f7f7f'
+            }
+          }
+        }
+      };
+    return layout
+}
+
 function getLineParams(str){
     var arr = JSON.parse(str);
     console.log(arr);
     var data = setupLineData(arr);
-    // var layout = setupLineLayout(arr);
-    var retVal = {data}
+    var layout = setupLineLayout();
+    var retVal = {data, layout}
     console.log(retVal);
     return retVal;
 }
