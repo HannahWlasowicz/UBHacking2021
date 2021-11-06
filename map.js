@@ -32,6 +32,24 @@ function setupMapData(arr){
     return retVal;
 }
 
+function setupMapLayout(arr){
+    
+    var latLon = findCenter(arr);
+    var latVal = latLon[0];
+    var lonVal = latLon[1];
+    var layout ={
+     mapbox: {
+        style:  'satellite-streets',
+        center: {
+            lat:latVal,
+            lon:lonVal
+        },
+        zoom:11
+    }
+   };
+   return layout;
+}
+
 
 function getMapParams(str){
     var arr = JSON.parse(str);
