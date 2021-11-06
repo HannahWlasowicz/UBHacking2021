@@ -3,6 +3,7 @@ import json
 
 API = "veronica i swear to god if u put the api on ur git"
 
+
 USData = requests.get("https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey=" + API).json()
 
 statesReq = requests.get("https://api.covidactnow.org/v2/states.json?apiKey=" + API)
@@ -31,7 +32,7 @@ def getStateData(state):
 def getUSData():
 	retVal = []
 	for val in USData["metricsTimeseries"]:
-		addVal = {"date" : val["date"], "positiveCases": val["testPositivityRatio"], "caseDensity": val["caseDensity"], "vaccination":val.get("vaccinationsCompleted", -1)}
+		addVal = {"date" : val["date"], "positiveCases": val["testPositivityRatio"], "caseDensity": val["caseDensity"], "vaccination":val.get('vaccinationsCompletedRatio', -1)}
 		retVal.append(addVal)
 
 	return retVal
