@@ -16,19 +16,16 @@ function loadLine(){
 
 function setupLineData(arr){
     var retVal = []
-    var textArr = []
-    var stateArr = []
+    var casesArr = []
+    var vaccineArr = []
+    var deathArr = []
     for(var i in arr){
-        textArr.push("test");
-        stateArr.push("TX");
+        vaccineArr.push("test");
+        casesArr.push("TX");
+        deathArr.push("test");
     }
 
-    data = {
-        type:'choropleth',
-        locationmode: 'USA-states',
-        locations: stateArr,
-        text: textArr
-    }
+    data = [vaccineArr, casesArr,deathArr]
     retVal.push(data);
     return retVal;
 }
