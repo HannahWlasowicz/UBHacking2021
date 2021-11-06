@@ -1,4 +1,4 @@
-function loadMap(){
+export function loadMap(){
     // Plotly.newPlot({
 
     // })
