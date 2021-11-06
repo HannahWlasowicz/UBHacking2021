@@ -1,6 +1,10 @@
 import {loadLine} from './line.js'
 import {loadMap} from './map.js'
-export function loadData(){
+function loadData(){
+    console.log("Poggers");
     loadMap();
     loadLine();
 }
+
+loadData();
+console.log("Tester")
