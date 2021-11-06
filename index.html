@@ -1,19 +1,27 @@
 <html>
+
 <head>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="map.js"></script>
-    <script src="line.js"></script>
+    <!-- <script src="map.js"></script> -->
+    <script type="module" src="main.js"></script>
     <style>
-        body, div{
+        body,
+        div {
             height: 100%;
         }
     </style>
 </head>
 
-<body onload="loadLine();">
-
-<div id="map"></div>
-<div id="line"></div>
+<body onload="loadData();">
+    <select name="cars" id="cars">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+    </select>
+    <div id="map"></div>
+    <div id="line"></div>
 
 </body>
+
 </html>
