@@ -9,6 +9,7 @@ statesReq = requests.get("https://api.covidactnow.org/v2/states.json?apiKey=" + 
 StatesData = statesReq.json()
 
 
+
 #format
 #"positiveCases": 0, "caseDensity": 0, "vaccination": 0
 #retuns the data for the given state

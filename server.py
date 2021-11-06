@@ -1,4 +1,6 @@
+from twilio.rest import Client
 from bottle import get, route, redirect, run, Bottle, static_file, view, post, request, template
+from twilio.twiml.messaging_response import MessagingResponse
 import bottle
 import json
 import backend
@@ -27,5 +29,6 @@ def serveStateStats(state):
 	state = state.upper()
 	retVal = backend.getStateData(state)
 	return json.dumps(retVal)
+
 
 run(app, host='localhost', port=8080)
