@@ -3,7 +3,7 @@ import {loadMap} from './map.js'
 function loadData(){
     console.log("Poggers");
     // loadMap();
-    // loadLine();
+    loadLine();
 }
 console.log("Tester");
 document.getElementById("body").onload = function() {loadData()};
