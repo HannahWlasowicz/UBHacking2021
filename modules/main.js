@@ -2,9 +2,9 @@ import {loadLine} from './line.js'
 import {loadMap} from './map.js'
 function loadData(){
     console.log("Poggers");
-    loadMap();
-    loadLine();
+    // loadMap();
+    // loadLine();
 }
-
-loadData();
-console.log("Tester")
+console.log("Tester");
+document.getElementById("body").onload = function() {loadData()};
+// loadData();
