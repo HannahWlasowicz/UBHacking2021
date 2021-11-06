@@ -1,11 +1,11 @@
-export function loadLine(){
+export function loadLine() {
     // Plotly.newPlot({
 
     // })
     console.log("Loading");
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        if (this.readyState === 4 && this.status === 200){
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
             var lineParams = getLineParams(this.response);
             Plotly.newPlot('lineChart', lineParams.data, lineParams.layout);
         }
@@ -27,69 +27,77 @@ export function loadLine(){
 // }
 
 
-function setupLineData(arr){
+function setupLineData(arr) {
     var retVal = []
     var casesArr = []
     var vaccineArr = []
+    var datesArr = []
     // var deathArr = []
-    for(var i in arr){
-        if(i['vaccination'] != null){
-            vaccineArr.push(i["vaccination"]*100);
+    var count = 0;
+    for(const val of arr) {
+        console.log(val);
+        if(val["vaccination"] <0){
+            // if(arr[count][])
+            vaccineArr.push(0);
         }
-        if(i['caseDensity'] != null){
-            casesArr.push(i["caseDensity"]*100);
-        }        
+        else{
+            vaccineArr.push(val["vaccination"]*100);
+        }
+        casesArr.push(val["caseDensity"]);
+        datesArr.push(val["date"])
     }
 
-    var data = [vaccineArr, casesArr]
+    var d1 = {x: datesArr, y:vaccineArr,  mode: 'lines'};
+    var d2 = {x: datesArr, y:casesArr,  mode: 'lines'};
+    var data = [d1, d2];
     retVal.push(data);
     console.log("Data");
     console.log(data);
-    return retVal;
+    return data;
 }
 
 
-function setupLineLayout(){
+function setupLineLayout() {
     var layout = {
         title: {
-          text:'COVID-19 Vaccination and Cases',
-          font: {
-            family: 'Courier New, monospace',
-            size: 24
-          },
-          xref: 'paper',
-          x: 0.05,
+            text: 'COVID-19 Vaccination and Cases',
+            font: {
+                family: 'Courier New, monospace',
+                size: 24
+            },
+            xref: 'paper',
+            x: 0.05,
         },
         xaxis: {
-          title: {
-            text: 'Date',
-            font: {
-              family: 'Courier New, monospace',
-              size: 18,
-              color: '#7f7f7f'
-            }
-          },
+            title: {
+                text: 'Date',
+                font: {
+                    family: 'Courier New, monospace',
+                    size: 18,
+                    color: '#7f7f7f'
+                }
+            },
         },
         yaxis: {
-          title: {
-            text: 'Vaccination and COVID Cases',
-            font: {
-              family: 'Courier New, monospace',
-              size: 18,
-              color: '#7f7f7f'
+            title: {
+                text: 'Vaccination and COVID Cases',
+                font: {
+                    family: 'Courier New, monospace',
+                    size: 18,
+                    color: '#7f7f7f'
+                }
             }
-          }
         }
-      };
+    };
     return layout
 }
 
-function getLineParams(str){
+function getLineParams(str) {
     var arr = JSON.parse(str);
     console.log(arr);
     var data = setupLineData(arr);
     var layout = setupLineLayout();
-    var retVal = {data, layout}
+    var retVal = { data, layout }
     console.log(retVal);
     return retVal;
 }
