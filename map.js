@@ -6,7 +6,7 @@ function loadMap(){
     xhttp.onreadystatechange = function(){
         if (this.readyState === 4 && this.status === 200){
             var mapParams = getMapParams(this.response);
-            Plotly.plot('map', mapParams.data, mapParams.layout);
+            Plotly.newPlot('map', mapParams.data, mapParams.layout);
         }
     };
     xhttp.open("GET", "/tickets");
@@ -30,6 +30,24 @@ function setupMapData(arr){
     }
     retVal.push(data);
     return retVal;
+}
+
+function setupMapLayout(arr){
+    
+    var latLon = findCenter(arr);
+    var latVal = latLon[0];
+    var lonVal = latLon[1];
+    var layout ={
+     mapbox: {
+        style:  'satellite-streets',
+        center: {
+            lat:latVal,
+            lon:lonVal
+        },
+        zoom:11
+    }
+   };
+   return layout;
 }
 
 
