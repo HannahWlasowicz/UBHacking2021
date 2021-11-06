@@ -12,13 +12,18 @@ def home():
 def serveState(state):
 	return template('Stats for {{state}}', state=state)
 	
-
+# format
+# [{"date":"", "positiveCases": 0, "caseDensity": 0, "vaccintion": 0}]
 @app.get('/covid/total')
 def serverAllStats():
-	return 1
+	retVal = []
+	return json.dumps(retVal)
 
+#format
+#"positiveCases": 0, "caseDensity": 0, "vaccintion": 0
 @app.get('/covid/<state>')
 def serveStateStats(state):
-	return 1
+	retVal = {}
+	return json.dumps(retVal)
 
 app.run(app, host='localhost', port=8080)
