@@ -6,7 +6,7 @@ function loadMap(){
     xhttp.onreadystatechange = function(){
         if (this.readyState === 4 && this.status === 200){
             var mapParams = getMapParams(this.response);
-            Plotly.plot('map', mapParams.data, mapParams.layout);
+            Plotly.newPlot('map', mapParams.data, mapParams.layout);
         }
     };
     xhttp.open("GET", "/tickets");
