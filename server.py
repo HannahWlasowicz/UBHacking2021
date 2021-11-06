@@ -11,6 +11,18 @@ app = Bottle()
 def home():
     return static_file("index.html", root = "")
 
+@app.route('/modules/main.js')
+def main():
+    return static_file('main.js', root='./modules')
+
+@app.route('/modules/line.js')
+def line():
+    return static_file('line.js', root='./modules')
+
+@app.route('/modules/map.js')
+def maps():
+    return static_file('map.js', root='./modules')
+
 @app.route('/<state>')
 def serveState(state):
 	return template('Stats for {{state}}', state=state)

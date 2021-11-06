@@ -2,15 +2,15 @@ export function loadMap(){
     // Plotly.newPlot({
 
     // })
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function(){
-        if (this.readyState === 4 && this.status === 200){
-            var mapParams = getMapParams(this.response);
-            Plotly.newPlot('map', mapParams.data, mapParams.layout);
-        }
-    };
-    xhttp.open("GET", "/tickets");
-    xhttp.send();
+    // var xhttp = new XMLHttpRequest();
+    // xhttp.onreadystatechange = function(){
+    //     if (this.readyState === 4 && this.status === 200){
+    //         var mapParams = getMapParams(this.response);
+    //         Plotly.newPlot('mapChart', mapParams.data, mapParams.layout);
+    //     }
+    // };
+    // xhttp.open("GET", "/tickets");
+    // xhttp.send();
 }
 
 

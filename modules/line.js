@@ -2,11 +2,12 @@ export function loadLine(){
     // Plotly.newPlot({
 
     // })
+    console.log("Loading");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if (this.readyState === 4 && this.status === 200){
             var lineParams = getLineParams(this.response);
-            Plotly.newPlot('line', lineParams.data, lineParams.layout);
+            Plotly.newPlot('lineChart', lineParams.data);
         }
     };
     xhttp.open("GET", "/covid/total");
@@ -32,21 +33,28 @@ function setupLineData(arr){
     var vaccineArr = []
     // var deathArr = []
     for(var i in arr){
-        vaccineArr.push(i["vaccination"]);
-        casesArr.push(i["caseDensity"]);
+        if(i['vaccination'] != null){
+            vaccineArr.push(i["vaccination"]*100);
+        }
+        if(i['caseDensity'] != null){
+            casesArr.push(i["caseDensity"]*100);
+        }        
     }
 
-    data = [vaccineArr, casesArr]
+    var data = [vaccineArr, casesArr]
     retVal.push(data);
+    console.log("Data");
+    console.log(data);
     return retVal;
 }
 
 
 function getLineParams(str){
     var arr = JSON.parse(str);
-
+    console.log(arr);
     var data = setupLineData(arr);
-    var layout = setupLineLayout(arr);
-    var retVal = {data, layout}
+    // var layout = setupLineLayout(arr);
+    var retVal = {data}
+    console.log(retVal);
     return retVal;
 }
