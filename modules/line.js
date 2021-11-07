@@ -31,18 +31,20 @@ function setupLineData(arr) {
     var prevVal = 0;
     for(const val of arr) {
         if(val["vaccination"] <=0){
-            vaccineArr.push(prevVal); 
+            vaccineArr.push(prevVal);
         }
         else{
             vaccineArr.push(val["vaccination"]*100);
             prevVal = val["vaccination"]*100;
         }
         casesArr.push(val["caseDensity"]);
+     
+       
         datesArr.push(val["date"])
     }
 
-    var d1 = {x: datesArr, y:vaccineArr,  mode: 'lines', text:vaccineArr, name: "Vaccine"};
-    var d2 = {x: datesArr, y:casesArr,  mode: 'lines',text:casesArr, name: "COVID-19 Cases"};
+    var d1 = {x: datesArr, y:vaccineArr,  mode: 'lines', hovertemplate:"Vaccination: %{y}, Date: %{x}", name: "Vaccine"};
+    var d2 = {x: datesArr, y:casesArr,  mode: 'lines',hovertemplate:"COVID Cases: %{y}, Date: %{x}", name: "COVID-19 Cases"};
     var data = [d1, d2];
     retVal.push(data);
     return data;
@@ -90,5 +92,6 @@ function getLineParams(str) {
     var data = setupLineData(arr);
     var layout = setupLineLayout();
     var retVal = { data, layout }
+    console.log(retVal);
     return retVal;
 }
