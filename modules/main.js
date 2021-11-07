@@ -55,24 +55,26 @@ var states = [
     ['Wyoming', 'WY'],
 ];
 function loadData(){
+    console.log("Loading");
     dropdown();
-    loadMap(states.slice(1));
     loadLine();
+    loadMap(states.slice(1));
 }
 
  function dropdown() {
     document.getElementById("selection").style.height = "50px";
    
- 
+    console.log("test");
     var select = document.createElement('select');
     select.name = 'states';
     select.id = 'states'
  
     for (var val of states)
     {
+        console.log(val);
         var option = document.createElement('option');
-        option.value = states[1];
-        option.text = states[0];
+        option.value = states[val][1];
+        option.text = states[val][0];
         select.appendChild(option);
     } 
     document.getElementById('selection').appendChild(select);
