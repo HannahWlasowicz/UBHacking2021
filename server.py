@@ -6,8 +6,8 @@ import json
 import backend
 
 app = Bottle()
-account_sid = "key"
-auth_token = "key"
+account_sid = ""
+auth_token = ""
 client = Client(account_sid, auth_token)
 
 @app.route('/')
