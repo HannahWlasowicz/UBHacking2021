@@ -73,8 +73,8 @@ function loadData(){
     {
         console.log(val);
         var option = document.createElement('option');
-        option.value = states[val][1];
-        option.text = states[val][0];
+        option.value = states[1];
+        option.text = states[0];
         select.appendChild(option);
     } 
     document.getElementById('selection').appendChild(select);

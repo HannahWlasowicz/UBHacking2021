@@ -1,21 +1,23 @@
 export function loadMap(states) {
     var xhttp = new XMLHttpRequest();
     var mapData = []
-    var url   = "/covid/",
-    proms = states.map(d => fetch(url+d[1]));
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var mapParams = getMapParams(this.response, states);
+            Plotly.newPlot('mapChart', mapParams.data, mapParams.layout);
+        }
+    };
+    xhttp.open("GET", "/covid/states");
+    xhttp.send();
+    // var url   = "/covid/",
+    // proms = states.map(d => fetch(url+d[1]));
     // console.log(proms);
-Promise.all(proms)
-       .then(ps => Promise.all(ps.map(p => p.json()))) // p.json() also returns a promise
-       .then(js => js.forEach((j,i) => (mapData.push([states[i][0],j['caseDensity']]), setupMap(mapData, states))))
+// Promise.all(proms)
+//        .then(ps => Promise.all(ps.map(p => p.json()))) // p.json() also returns a promise
+//        .then(js => js.forEach((j,i) => (mapData.push([states[i][0],j['caseDensity']]), setupMap(mapData, states))))
 }
 
-function getValues(arr){
-    var retVal = []
-    for(const val in arr){
-        retVal.push(arr[val][1])
-    }
-    return retVal
-}
 
 function getState(arr){
     var stat = []
@@ -25,30 +27,26 @@ function getState(arr){
     return stat
 }
 
-function getPostal(arr){
-    var post = []
-    for(const val in arr){
-        post.push(arr[val][1])
+function setupMapData(arr,states) {
+    var stateArr = getState(states)
+    var postArr = []
+    var valsArr = []
+    for(const val of arr) {
+        postArr.push(val["state"]);
+        valsArr.push(val["caseDensity"]);
     }
-    return post
-}
 
-function setupMapData(arr, states) {
-    var stat = getState(states);
-    var postal = getPostal(states);
-    var nums = getValues(arr);
-    console.log(stat);
     var data = [{
         type: 'choropleth',
         locationmode: 'USA-states',
-        locations: postal,
-        z: nums,
-        text: stat,        
+        locations: postArr,
+        z: valsArr,
+        text: stateArr,        
         autocolorscale: true
     }];
-    console.log(data);
     return data;
 }
+
 
 function setupMapLayout() {
 
@@ -70,9 +68,10 @@ function setupMapLayout() {
 }
 
 
-function setupMap(arr, states) {
+function getMapParams(str, states) {
+    var arr = JSON.parse(str);
     var data = setupMapData(arr,states);
     var layout = setupMapLayout();
-    Plotly.newPlot('mapChart', data, layout);
-    Plotly.update('mapChart', data, layout);
+    var retVal = {data,layout};
+    return retVal;
 }
