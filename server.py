@@ -1,11 +1,14 @@
 from twilio.rest import Client
 from bottle import get, route, redirect, run, Bottle, static_file, view, post, request, template
-from twilio.twiml.messaging_response import MessagingResponse
+from twilio.twiml.messaging_response import Body, Message, MessagingResponse
 import bottle
 import json
 import backend
 
 app = Bottle()
+account_sid = "key"
+auth_token = "key"
+client = Client(account_sid, auth_token)
 
 @app.route('/')
 def home():
@@ -41,6 +44,25 @@ def serveStateStats(state):
 	state = state.upper()
 	retVal = backend.getStateData(state)
 	return json.dumps(retVal)
+
+@app.post('/sms')
+def serveText():
+
+	body = bottle.request.forms['Body']
+
+	print(body)
+
+	parsed = body.split(",")
+
+	state = parsed[1].strip()
+	county=parsed[0].strip()
+
+	resp = MessagingResponse()
+	msg = Message()
+	msg.body(backend.getCountyInfo(state.upper(), county.upper()))
+	resp.append(msg)
+
+	return str(resp)
 
 
 run(app, host='localhost', port=8080)

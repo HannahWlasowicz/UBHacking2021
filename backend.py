@@ -2,12 +2,15 @@ import requests
 import json
 
 API = "veronica i swear to god if u put the api on ur git"
+API= 'b4d7a137727d4e6b9f751f6dcf13018f'
 
 
 USData = requests.get("https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey=" + API).json()
 
 statesReq = requests.get("https://api.covidactnow.org/v2/states.json?apiKey=" + API)
 StatesData = statesReq.json()
+
+countyData = requests.get("https://api.covidactnow.org/v2/counties.json?apiKey=" + API).json()
 
 
 
@@ -36,3 +39,21 @@ def getUSData():
 		retVal.append(addVal)
 
 	return retVal
+
+def cdcNumberToString(cdcLV):
+	if cdcLV == 1:
+		return "LOW"
+	elif cdcLV == 2:
+		return "MODERATE"
+	elif cdcLV == 3:
+		return "HIGH"
+	else:
+		return "NO DATA"
+
+def getCountyInfo(state, county):
+	for counties in countyData:
+		if counties["state"] == state and counties["county"].upper() == county:
+			cdcLV = cdcNumberToString(counties["cdcTransmissionLevel"])
+			return "There are " + str(counties["metrics"]["caseDensity"]) + "cases per 100 over the past 7 days. " + county + " is at " + cdcLV + " risk accoding to the CDC."
+	return "Invalid State or County"
+
