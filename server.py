@@ -37,6 +37,11 @@ def serverAllStats():
 	retVal = backend.getUSData()
 	return json.dumps(retVal)
 
+@app.get('/covid/states')
+def serveAllStateStats():
+	retVal = backend.getAllStates()
+	return json.dumps(retVal)
+
 #format
 #"positiveCases": 0, "caseDensity": 0, "vaccination": 0
 @app.get('/covid/<state>')

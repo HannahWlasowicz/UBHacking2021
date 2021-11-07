@@ -2,7 +2,6 @@ import requests
 import json
 
 API = "veronica i swear to god if u put the api on ur git"
-API= 'b4d7a137727d4e6b9f751f6dcf13018f'
 
 
 USData = requests.get("https://api.covidactnow.org/v2/country/US.timeseries.json?apiKey=" + API).json()
@@ -28,6 +27,17 @@ def getStateData(state):
 			return retVal
 
 	return retVal 
+
+def getAllStates():
+	retVal = []
+	for states in StatesData:
+		temp = {}
+		temp["positiveCases"] = states["metrics"].get("testPositivityRatio", -1)
+		temp["caseDensity"] = states["metrics"].get("caseDensity", -1)
+		temp["vaccination"] = states["metrics"].get("vaccinationsCompletedRatio", -1)
+		retVal.append(temp)
+
+	return retVal
 
 # format
 # [{"date":"", "positiveCases": 0, "caseDensity": 0, "vaccintion": 0}]
