@@ -56,27 +56,27 @@ var states = [
 ];
 function loadData(){
     console.log("Loading");
-    dropdown();
+    // dropdown();
     loadLine();
     loadMap(states.slice(1));
 }
 
- function dropdown() {
-    document.getElementById("selection").style.height = "50px";
+//  function dropdown() {
+//     document.getElementById("selection").style.height = "50px";
    
-    console.log("test");
-    var select = document.createElement('select');
-    select.name = 'states';
-    select.id = 'states'
+//     console.log("test");
+//     var select = document.createElement('select');
+//     select.name = 'states';
+//     select.id = 'states'
  
-    for (var val of states)
-    {
-        var option = document.createElement('option');
-        option.value = states[1];
-        option.text = states[0];
-        select.appendChild(option);
-    } 
-    document.getElementById('selection').appendChild(select);
-}
+//     for (var val of states)
+//     {
+//         var option = document.createElement('option');
+//         option.value = states[1];
+//         option.text = states[0];
+//         select.appendChild(option);
+//     } 
+//     document.getElementById('selection').appendChild(select);
+// }
 
 document.getElementById('body').onload = function() {loadData()};
