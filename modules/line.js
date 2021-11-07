@@ -28,22 +28,21 @@ function setupLineData(arr) {
     var casesArr = []
     var vaccineArr = []
     var datesArr = []
-    // var deathArr = []
-    var count = 0;
+    var prevVal = 0;
     for(const val of arr) {
-        if(val["vaccination"] <0){
-            // if(arr[count][])
-            vaccineArr.push(0);
+        if(val["vaccination"] <=0){
+            vaccineArr.push(prevVal); 
         }
         else{
             vaccineArr.push(val["vaccination"]*100);
+            prevVal = val["vaccination"]*100;
         }
         casesArr.push(val["caseDensity"]);
         datesArr.push(val["date"])
     }
 
-    var d1 = {x: datesArr, y:vaccineArr,  mode: 'lines'};
-    var d2 = {x: datesArr, y:casesArr,  mode: 'lines'};
+    var d1 = {x: datesArr, y:vaccineArr,  mode: 'lines', text:vaccineArr};
+    var d2 = {x: datesArr, y:casesArr,  mode: 'lines',text:casesArr};
     var data = [d1, d2];
     retVal.push(data);
     return data;
@@ -80,7 +79,8 @@ function setupLineLayout() {
                     color: '#7f7f7f'
                 }
             }
-        }
+        },
+        hovermode: 'closest'
     };
     return layout
 }

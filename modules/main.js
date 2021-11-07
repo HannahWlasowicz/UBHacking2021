@@ -71,7 +71,6 @@ function loadData(){
  
     for (var val of states)
     {
-        console.log(val);
         var option = document.createElement('option');
         option.value = states[1];
         option.text = states[0];

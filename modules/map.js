@@ -10,12 +10,6 @@ export function loadMap(states) {
     };
     xhttp.open("GET", "/covid/states");
     xhttp.send();
-    // var url   = "/covid/",
-    // proms = states.map(d => fetch(url+d[1]));
-    // console.log(proms);
-// Promise.all(proms)
-//        .then(ps => Promise.all(ps.map(p => p.json()))) // p.json() also returns a promise
-//        .then(js => js.forEach((j,i) => (mapData.push([states[i][0],j['caseDensity']]), setupMap(mapData, states))))
 }
 
 
@@ -36,12 +30,14 @@ function setupMapData(arr,states) {
         valsArr.push(val["caseDensity"]);
     }
 
+    // console.log(stateArr);
+
     var data = [{
         type: 'choropleth',
         locationmode: 'USA-states',
         locations: postArr,
         z: valsArr,
-        text: stateArr,        
+        hovertemplate: '%{locations}: %{z}',     
         autocolorscale: true
     }];
     return data;
@@ -62,7 +58,8 @@ function setupMapLayout() {
                 subunitcolor: 'rgb(255, 255, 255)',
                 lonaxis: {},
                 lataxis: {}
-            }
+            },
+        hovermode: 'closest'
         };
     return layout;
 }
