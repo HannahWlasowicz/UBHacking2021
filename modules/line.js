@@ -41,8 +41,8 @@ function setupLineData(arr) {
         datesArr.push(val["date"])
     }
 
-    var d1 = {x: datesArr, y:vaccineArr,  mode: 'lines', text:vaccineArr};
-    var d2 = {x: datesArr, y:casesArr,  mode: 'lines',text:casesArr};
+    var d1 = {x: datesArr, y:vaccineArr,  mode: 'lines', text:vaccineArr, name: "Vaccine"};
+    var d2 = {x: datesArr, y:casesArr,  mode: 'lines',text:casesArr, name: "COVID-19 Cases"};
     var data = [d1, d2];
     retVal.push(data);
     return data;
