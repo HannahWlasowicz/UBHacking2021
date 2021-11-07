@@ -1,61 +1,111 @@
-export function loadMap(){
-    // Plotly.newPlot({
-
-    // })
-    // var xhttp = new XMLHttpRequest();
-    // xhttp.onreadystatechange = function(){
-    //     if (this.readyState === 4 && this.status === 200){
-    //         var mapParams = getMapParams(this.response);
-    //         Plotly.newPlot('mapChart', mapParams.data, mapParams.layout);
+export function loadMap(states) {
+    var xhttp = new XMLHttpRequest();
+    var mapData = []
+    // for (const state of states) {
+    //     // console.log(state);
+    //     var url = "/covid/" + state[1];
+    //     xhttp.open("GET", url);
+    //     xhttp.onreadystatechange = function () {
+    //         if (this.readyState === 4 && this.status === 200) {
+    //             var stateData = getStateData(this.response);
+    //             mapData.push([state[0], stateData]);
+    //             console.log(mapData);
+    //         }
     //     }
-    // };
-    // xhttp.open("GET", "/tickets");
-    // xhttp.send();
+    //     xhttp.send();
+    //     // xhttp.onreadystatechange = function () {
+    //     //     if (this.readyState === 4 && this.status === 200) {
+    //     //         var stateData = getStateData(this.response);
+    //     //         mapData.push([state[0], stateData]);
+    //     //     }
+    //     // };
+    //     // xhttp.open("GET", "/covid/" + state[1]);
+    //     // xhttp.send();
+    // }
+
+    var url   = "/covid/",
+    proms = states.map(d => fetch(url+d[1]));
+    // console.log(proms);
+Promise.all(proms)
+       .then(ps => Promise.all(ps.map(p => p.json()))) // p.json() also returns a promise
+       .then(js => js.forEach((j,i) => (mapData.push([states[i][0],j['caseDensity']]), setupMap(mapData, states))))
+       .then(console.log("setupdata"));
+
+    // console.log(mapData);
+    // var mapParams = getMapParams(this.response);
+    // Plotly.newPlot('mapChart', mapParams.data, mapParams.layout);
 }
 
-
-function setupMapData(arr){
+function getValues(arr){
     var retVal = []
-    var textArr = []
-    var stateArr = []
-    for(var i in arr){
-        textArr.push("test");
-        stateArr.push("TX");
+    for(const val in arr){
+        retVal.push(arr[val][1])
     }
+    return retVal
+}
 
-    data = {
-        type:'choropleth',
+function getState(arr){
+    var stat = []
+    for(const val in arr){
+        console.log(val);
+        stat.push(arr[val][0])
+    }
+    return stat
+}
+
+function getPostal(arr){
+    var post = []
+    for(const val in arr){
+        post.push(arr[val][1])
+    }
+    return post
+}
+
+function setupMapData(arr, states) {
+    var stat = getState(states);
+    var postal = getPostal(states);
+    var nums = getValues(arr);
+    // console.log(stat);
+    // console.log(nums);
+    var data = [{
+        type: 'choropleth',
         locationmode: 'USA-states',
-        text: textArr
-    }
-    retVal.push(data);
-    return retVal;
+        text: stat,
+        locations: postal,
+        z: nums,
+        autocolorscale: true
+    }];
+    // retVal.push(data);
+    return data;
 }
 
-function setupMapLayout(arr){
-    
-    var latLon = findCenter(arr);
-    var latVal = latLon[0];
-    var lonVal = latLon[1];
-    var layout ={
-     mapbox: {
-        style:  'satellite-streets',
-        center: {
-            lat:latVal,
-            lon:lonVal
-        },
-        zoom:11
-    }
-   };
-   return layout;
+function setupMapLayout() {
+
+    var layout = {
+        title: 'Covid Cases',
+            geo:{
+                scope: 'usa',
+                countrycolor: 'rgb(255, 255, 255)',
+                showland: true,
+                landcolor: 'rgb(217, 217, 217)',
+                showlakes: true,
+                lakecolor: 'rgb(255, 255, 255)',
+                subunitcolor: 'rgb(255, 255, 255)',
+                lonaxis: {},
+                lataxis: {}
+            }
+        };
+    return layout;
 }
 
 
-function getMapParams(str){
-    var arr = JSON.parse(str);
-
-    var data = setupMapData(arr);
-    var layout = setupMapLayout(arr);
-    var retVal = {data, layout}
-    return retVal;
+function setupMap(arr, states) {
+    // var arr = JSON.parse(str);
+    // console.log(arr);
+    var data = setupMapData(arr,states);
+    var layout = setupMapLayout();
+    Plotly.newPlot('mapChart', data, layout);
+    Plotly.update('mapChart', data, layout);
+    // console.log(data);
+    // return retVal;
 }

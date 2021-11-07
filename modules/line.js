@@ -1,8 +1,4 @@
 export function loadLine() {
-    // Plotly.newPlot({
-
-    // })
-    console.log("Loading");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -35,7 +31,6 @@ function setupLineData(arr) {
     // var deathArr = []
     var count = 0;
     for(const val of arr) {
-        console.log(val);
         if(val["vaccination"] <0){
             // if(arr[count][])
             vaccineArr.push(0);
@@ -51,8 +46,6 @@ function setupLineData(arr) {
     var d2 = {x: datesArr, y:casesArr,  mode: 'lines'};
     var data = [d1, d2];
     retVal.push(data);
-    console.log("Data");
-    console.log(data);
     return data;
 }
 
@@ -94,10 +87,8 @@ function setupLineLayout() {
 
 function getLineParams(str) {
     var arr = JSON.parse(str);
-    console.log(arr);
     var data = setupLineData(arr);
     var layout = setupLineLayout();
     var retVal = { data, layout }
-    console.log(retVal);
     return retVal;
 }
