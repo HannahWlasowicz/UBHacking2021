@@ -38,11 +38,11 @@ function setupMapData(arr,states) {
         locations: postArr,
         z: valsArr,
         hovertemplate: '%{locations}: %{z}',
-        colorscale: [
-            [0,'rgb(5, 10, 172)'],[0.35,'rgb(40, 60, 190)'],
-            [0.5,'rgb(70, 100, 245)'], [0.6,'rgb(90, 120, 245)'],
-            [0.7,'rgb(106, 137, 247)'],[1,'rgb(220, 220, 220)']],     
-        autocolorscale: false
+        // colorscale: [
+        //     [0,'rgb(5, 10, 172)'],[0.35,'rgb(40, 60, 190)'],
+        //     [0.5,'rgb(70, 100, 245)'], [0.6,'rgb(90, 120, 245)'],
+        //     [0.7,'rgb(106, 137, 247)'],[1,'rgb(220, 220, 220)']],     
+        autocolorscale: true,
     }];
     return data;
 }
